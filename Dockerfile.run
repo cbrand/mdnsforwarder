@@ -12,6 +12,8 @@ RUN upx -9 /opt/mdnsforwarder
 
 FROM alpine:3.13
 
+RUN apk add --no-cache libc6-compat
+
 COPY --from=builder /opt/mdnsforwarder /opt/mdnsforwarder
 
 CMD [ "/opt/mdnsforwarder" ]
