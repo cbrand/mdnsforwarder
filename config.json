@@ -1,0 +1,12 @@
+{
+    "mdnsInterfaces": [
+        "eth0",
+        "eth1"
+    ],
+    "listeners": [
+        "0.0.0.0:53531"
+    ],
+    "targets": [
+        "remote:53531"
+    ]
+}
