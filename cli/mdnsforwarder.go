@@ -72,8 +72,9 @@ func (config *Config) ToForwarder() (mdnsforwarder.Forwarder, error) {
 }
 
 var app = &cli.App{
-	Name:  "mdnsforwarder",
-	Usage: "Handler to forward mdns traffic between networks and to other forwarder instances",
+	Name:    "mdnsforwarder",
+	Usage:   "Handler to forward mdns traffic between networks and to other forwarder instances",
+	Version: "1.0.0",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:    "log-level",
