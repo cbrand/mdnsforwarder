@@ -13,14 +13,16 @@ type Forwarder interface {
 	MDNSNetworkInterfaces() []*net.Interface
 	ListenerIps() []*net.UDPAddr
 	GetTargets() []*net.UDPAddr
+	SkipOwnIP() bool
 	Run() error
 }
 
-func New(interfaces []*net.Interface, listenerIps []*net.UDPAddr, targets []*net.UDPAddr) Forwarder {
+func New(interfaces []*net.Interface, listenerIps []*net.UDPAddr, targets []*net.UDPAddr, skipOwnIP bool) Forwarder {
 	return &ForwarderImpl{
 		mdnsNetworkInterfaces: interfaces,
 		listenerIps:           listenerIps,
 		targets:               targets,
+		skipOwnIP:             skipOwnIP,
 	}
 }
 
@@ -28,6 +30,7 @@ type ForwarderImpl struct {
 	mdnsNetworkInterfaces []*net.Interface
 	listenerIps           []*net.UDPAddr
 	targets               []*net.UDPAddr
+	skipOwnIP             bool
 }
 
 func (forwarder *ForwarderImpl) MDNSNetworkInterfaces() []*net.Interface {
@@ -40,6 +43,10 @@ func (forwarder *ForwarderImpl) ListenerIps() []*net.UDPAddr {
 
 func (forwarder *ForwarderImpl) GetTargets() []*net.UDPAddr {
 	return forwarder.targets
+}
+
+func (forwarder *ForwarderImpl) SkipOwnIP() bool {
+	return forwarder.skipOwnIP
 }
 
 func (forwarder *ForwarderImpl) Run() error {

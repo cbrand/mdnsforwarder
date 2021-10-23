@@ -165,7 +165,7 @@ func (handler *Handler) Run() error {
 }
 
 func (handler *Handler) handleLocalMessage(udpMessage *UDPMessage) error {
-	if handler.isOwnIP(udpMessage.Address.IP) {
+	if handler.isOwnIP(udpMessage.Address.IP) && handler.forwarder.SkipOwnIP() {
 		return nil
 	}
 	if handler.interfaceCache == nil || handler.interfaceCache.Expired() {

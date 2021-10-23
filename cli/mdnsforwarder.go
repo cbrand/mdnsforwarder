@@ -37,6 +37,7 @@ type Config struct {
 	MdnsInterfaces []string `json:"mdnsInterfaces"`
 	Listeners      []string `json:"listeners"`
 	Targets        []string `json:"targets"`
+	SkipOwnIP      bool     `json:"skip_own_ip,omitempty"`
 }
 
 func (config *Config) ToForwarder() (mdnsforwarder.Forwarder, error) {
@@ -67,7 +68,7 @@ func (config *Config) ToForwarder() (mdnsforwarder.Forwarder, error) {
 		convertedTargets = append(convertedTargets, target)
 	}
 
-	forwarderConfig := mdnsforwarder.New(convertedInterfaces, convertedListeners, convertedTargets)
+	forwarderConfig := mdnsforwarder.New(convertedInterfaces, convertedListeners, convertedTargets, config.SkipOwnIP)
 	return forwarderConfig, nil
 }
 
@@ -99,7 +100,9 @@ var app = &cli.App{
 				log.Fatal("Couldn't read raw data from config file")
 				return err
 			}
-			config := &Config{}
+			config := &Config{
+				SkipOwnIP: true,
+			}
 			err = json.Unmarshal(data, config)
 			if err != nil {
 				log.Fatal("Config file doesn't have valid json construct")

@@ -18,6 +18,7 @@ Refer to the config.json for an example. The configuration options are:
 - `mdnsInterfaces`: list of interfaces which should route mdnstraffic between each other
 - `listeners`: Host/Port combination where unicast messages including mdns messages via UDP is expected
 - `targets`: The list of targets where MDNS traffic from the local interfaces should be forwarded to.
+- `skip_own_ip`: Defaults to `true`. If set to `false`, this will handle all messages which are also send by the own list and should only be used in special environments.
 
 ## Availability
 
