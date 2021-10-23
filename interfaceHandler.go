@@ -85,11 +85,12 @@ func (interfaceHandler *InterfaceHandler) Run(channel chan *UDPMessage) error {
 		}
 		if controlMessage.Dst.IsMulticast() && controlMessage.Dst.Equal(interfaceHandler.udpAddress.IP) {
 			if numBytes > 0 && !interfaceHandler.sendFromSelf(controlMessage.Src) {
+				trimmedData := buffer[:numBytes]
 				message := &UDPMessage{
 					Interface: interfaceHandler.networkInterface,
 					Address:   &net.UDPAddr{IP: controlMessage.Src, Port: interfaceHandler.udpAddress.Port, Zone: interfaceHandler.udpAddress.Zone},
 					NumBytes:  numBytes,
-					Data:      buffer,
+					Data:      trimmedData,
 				}
 				channel <- message
 			}

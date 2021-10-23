@@ -33,12 +33,15 @@ func (handler *ListenerHandler) Run(channel chan *RemoteUDPMessage) error {
 			return err
 		}
 
-		message := &RemoteUDPMessage{
-			Address:  remoteAddr,
-			NumBytes: numBytes,
-			Data:     buffer,
+		if numBytes > 0 {
+			trimmedData := buffer[:numBytes]
+			message := &RemoteUDPMessage{
+				Address:  remoteAddr,
+				NumBytes: numBytes,
+				Data:     trimmedData,
+			}
+			channel <- message
 		}
-		channel <- message
 	}
 }
 

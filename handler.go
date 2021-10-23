@@ -184,7 +184,7 @@ func (handler *Handler) handleLocalMessage(udpMessage *UDPMessage) error {
 	}
 
 	for target, targetHandler := range handler.targets {
-		log.Debugf("Forwarding local message from %s to remote target %s", udpMessage.Address.String(), target.IP.String())
+		log.Debugf("Forwarding local message from %s to remote target %s:%d", udpMessage.Address.String(), target.IP.String(), target.Port)
 		err := targetHandler.Send(udpMessage.Data)
 		if err != nil {
 			log.Warnf("Couldn't send message to remote %s: %s", target.String(), err.Error())
