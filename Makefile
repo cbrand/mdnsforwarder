@@ -1,5 +1,6 @@
 
 compile:
+	mkdir -p dist
 	docker build -t mdnsforwarder:latest .
 	docker run --rm -v $(CURDIR)/dist:$(shell docker run --rm -t mdnsforwarder:latest pwd)/dist -t mdnsforwarder:latest make compile-direct
 
